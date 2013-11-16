@@ -24,7 +24,6 @@
 				utils.ifFunctionExecute(opt.onpause);
 			},
 			ended: function() {
-				target[0].currentTime = 0;
 				utils.ifFunctionExecute(opt.onended);
 			}
 		};
@@ -72,6 +71,11 @@
 		if (utils.checkExists(target) && target.length > 0) {
 			for (var i = 0, l = optsList.length; i < l; i++) {
 				opt[optsList[i]] = utils.checkExists(options[optsList[i]]) ? options[optsList[i]] : defaultOpts[optsList[i]];
+			}
+
+			if (utils.checkExists(opt.source)) {
+				target.html('<source src="' + opt.source + '" type="video/mp4" />');
+				target[0].load();
 			}
 
 			if (opt.autoplay) {
