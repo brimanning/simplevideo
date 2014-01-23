@@ -38,6 +38,9 @@
 			},
 			ended: function() {
 				utils.ifFunctionExecute(opt.onended);
+			},
+			setTime: function(time) {
+				target[0].currentTime = time;
 			}
 		};
 	w.simplevid = {};
@@ -103,5 +106,9 @@
 	};
 	w.simplevid.pause = function() {
 		vidInterface.pause();
+	};
+	w.simplevid.setTime = function(time) {
+		//TODO: detect if format is percentage or time format
+		vidInterface.setTime(time);
 	};
 }(window, jQuery));
