@@ -97,7 +97,7 @@
 
     video.setTime = function(time) {
       if (typeof time === 'string') {
-        if (time.indexOf('%') > 0 && parseInt(time) < 100 && parseInt(time) >= 0) {
+        if (time.indexOf('%') > 0 && parseInt(time) <= 100 && parseInt(time) >= 0) {
           time = (parseInt(time) / 100) * video.target[0].duration;
         }
       }
