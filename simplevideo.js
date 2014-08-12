@@ -96,7 +96,12 @@
     };
 
     video.setTime = function(time) {
-      //TODO: detect if format is percentage or time format
+      if (typeof time === 'string') {
+        if (time.indexOf('%') > 0 && parseInt(time) < 100 && parseInt(time) >= 0) {
+          time = (parseInt(time) / 100) * video.target[0].duration;
+        }
+      }
+
       video.target[0].currentTime = time;
     };
 
@@ -112,7 +117,7 @@
       if (!utils.checkExists(opt.source)) {
   			if (utils.checkExists(video.target.attr('src'))) {
           opt.source = video.target.attr('src');
-        } else if (video.target.find('source').length > 0 && utils.checkExists(video.target.find('source').attr('src')) {
+        } else if (video.target.find('source').length > 0 && utils.checkExists(video.target.find('source').attr('src'))) {
           opt.source = video.target.find('source').attr('src');
         }
       }
