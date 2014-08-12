@@ -112,7 +112,7 @@
       if (!utils.checkExists(opt.source)) {
   			if (utils.checkExists(video.target.attr('src'))) {
           opt.source = video.target.attr('src');
-        } else if (video.target.find('source') && video.target.find('source').length > 0 && video.target.find('source').attr('src')) {
+        } else if (video.target.find('source').length > 0 && utils.checkExists(video.target.find('source').attr('src')) {
           opt.source = video.target.find('source').attr('src');
         }
       }
