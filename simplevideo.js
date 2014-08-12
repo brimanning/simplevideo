@@ -13,7 +13,6 @@
 
 (function (w, $) {
 	var opt = {},
-		target = null,
 		defaultOpts = {
 			autoplay : false,
 			source: null,
@@ -21,7 +20,7 @@
 			onplay: null,
 			onpause: null,
 			onended: function() {
-				target.currentTime = 0;
+				video.target.currentTime = 0;
 			},
 			showDefaultControlsOnMobile : true
 		},
@@ -34,23 +33,7 @@
 			'onended',
 			'showDefaultControlsOnMobile'
 		],
-		utils = {},
-		vidInterface = {
-			play: function() {
-				target[0].play();
-				utils.ifFunctionExecute(opt.onplay);
-			},
-			pause: function() {
-				target[0].pause();
-				utils.ifFunctionExecute(opt.onpause);
-			},
-			ended: function() {
-				utils.ifFunctionExecute(opt.onended);
-			},
-			setTime: function(time) {
-				target[0].currentTime = time;
-			}
-		};
+		utils = {};
 
 	w.simplevideo = {};
 
@@ -93,42 +76,50 @@
 
 	w.simplevideo.init = function(options) {
     var video = {};
+
 		if (utils.checkExists(options.target)) {
 			if (options.target instanceof jQuery) {
-				target = options.target;
+				video.target = options.target;
 			} else if (typeof options.target === 'string') {
-				target = $(options.target);
+				video.target = $(options.target);
 			}
 		}
-		if (utils.checkExists(target) && target.length > 0) {
+
+    video.play = function() {
+      video.target[0].play();
+      utils.ifFunctionExecute(opt.onplay);
+    };
+
+    video.pause = function() {
+      video.target[0].pause();
+      utils.ifFunctionExecute(opt.onpause);
+    };
+
+    video.setTime = function(time) {
+      //TODO: detect if format is percentage or time format
+      video.target[0].currentTime = time;
+    };
+
+    video.ended = function() {
+      utils.ifFunctionExecute(opt.onended);
+    };
+
+		if (utils.checkExists(video.target) && video.target.length > 0) {
 			for (var i = 0, l = optsList.length; i < l; i++) {
 				opt[optsList[i]] = utils.checkExists(options[optsList[i]]) ? options[optsList[i]] : defaultOpts[optsList[i]];
 			}
 
 			if (utils.checkExists(opt.source)) {
-				target.html('<source src="' + opt.source + '" type="video/mp4" />');
-				target[0].load();
+				video.target.html('<source src="' + opt.source + '" type="video/mp4" />');
+				video.target[0].load();
 			}
 
 			if (opt.autoplay) {
-				vidInterface.play();
+				video.play();
 			}
 
-			target.bind('ended', vidInterface.ended);
+			video.target.bind('ended', video.ended);
 		}
-
-    video.play = function() {
-      vidInterface.play();
-    };
-
-    video.pause = function() {
-      vidInterface.pause();
-    };
-
-    video.setTime = function(time) {
-      //TODO: detect if format is percentage or time format
-      vidInterface.setTime(time);
-    };
 
     return video;
 	};
