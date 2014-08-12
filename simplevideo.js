@@ -89,6 +89,8 @@
       opt = {},
       timeInterval = null;
 
+    video.paused = false;
+
 		if (utils.checkExists(options.target)) {
 			if (options.target instanceof jQuery) {
 				video.target = options.target;
@@ -99,6 +101,7 @@
 
     video.play = function() {
       video.target[0].play();
+      video.paused = false;
       utils.ifFunctionExecute(opt.onPlay);
 
       if (timeInterval === null) {
@@ -113,6 +116,7 @@
     video.pause = function() {
       clearInterval(timeInterval);
       video.target[0].pause();
+      video.paused = true;
       utils.ifFunctionExecute(opt.onPause);
     };
 
@@ -127,6 +131,7 @@
     };
 
     video.ended = function() {
+      video.paused = true;
       clearInterval(timeInterval);
       timeInterval = null;
       utils.ifFunctionExecute(opt.onEnded);

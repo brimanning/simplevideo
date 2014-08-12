@@ -24,6 +24,13 @@
 					console.log('ended');
 				}
 			});
+			$('#video1').click(function(e) {
+				if (video1.paused) {
+					video1.play();
+				} else {
+					video1.pause();
+				}
+			});
 		</script>
 	</body>
 </html>
