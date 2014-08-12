@@ -109,10 +109,16 @@
 				opt[optsList[i]] = utils.checkExists(options[optsList[i]]) ? options[optsList[i]] : defaultOpts[optsList[i]];
 			}
 
-			if (utils.checkExists(opt.source)) {
-				video.target.html('<source src="' + opt.source + '" type="video/mp4" />');
-				video.target[0].load();
-			}
+      if (!utils.checkExists(opt.source)) {
+  			if (utils.checkExists(video.target.attr('src'))) {
+          opt.source = video.target.attr('src');
+        } else if (video.target.find('source') && video.target.find('source').length > 0 && video.target.find('source').attr('src')) {
+          opt.source = video.target.find('source').attr('src');
+        }
+      }
+
+      video.target.html('<source src="' + opt.source + '" type="video/mp4" />');
+      video.target[0].load();
 
 			if (opt.autoplay) {
 				video.play();
