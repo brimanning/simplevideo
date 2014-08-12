@@ -12,26 +12,30 @@
  */
 
 (function (w, $) {
-	var opt = {},
-		defaultOpts = {
+	var
+    defaultOpts = {
 			autoplay : false,
 			source: null,
 			poster: null,
-			onplay: null,
-			onpause: null,
-			onended: function() {
+			onPlay: null,
+			onPause: null,
+			onEnded: function() {
 				video.target.currentTime = 0;
 			},
-			showDefaultControlsOnMobile : true
+			showDefaultControlsOnMobile : true,
+      onPlaying: null,
+      onPlayingInterval: 30
 		},
 		optsList = [
 			'autoplay',
 			'source',
 			'poster',
-			'onplay',
-			'onpause',
-			'onended',
-			'showDefaultControlsOnMobile'
+			'onPlay',
+			'onPause',
+			'onEnded',
+			'showDefaultControlsOnMobile',
+      'onPlaying',
+      'onPlayingInterval'
 		],
 		utils = {};
 
@@ -75,7 +79,9 @@
 	};
 
 	w.simplevideo.init = function(options) {
-    var video = {};
+    var video = {},
+      opt = {},
+      timeInterval = null;
 
 		if (utils.checkExists(options.target)) {
 			if (options.target instanceof jQuery) {
@@ -87,12 +93,21 @@
 
     video.play = function() {
       video.target[0].play();
-      utils.ifFunctionExecute(opt.onplay);
+      utils.ifFunctionExecute(opt.onPlay);
+
+      if (timeInterval === null) {
+        timeInterval = setInterval(function () {
+          if (utils.checkExists(opt.onPlaying) && typeof opt.onPlaying === 'function') {
+            opt.onPlaying(video.target[0].currentTime, video.target[0].duration);
+          }
+        }, opt.onPlayingInterval);
+      }
     };
 
     video.pause = function() {
+      clearInterval(timeInterval);
       video.target[0].pause();
-      utils.ifFunctionExecute(opt.onpause);
+      utils.ifFunctionExecute(opt.onPause);
     };
 
     video.setTime = function(time) {
@@ -106,13 +121,15 @@
     };
 
     video.ended = function() {
-      utils.ifFunctionExecute(opt.onended);
+      clearInterval(timeInterval);
+      timeInterval = null;
+      utils.ifFunctionExecute(opt.onEnded);
     };
 
 		if (utils.checkExists(video.target) && video.target.length > 0) {
 			for (var i = 0, l = optsList.length; i < l; i++) {
 				opt[optsList[i]] = utils.checkExists(options[optsList[i]]) ? options[optsList[i]] : defaultOpts[optsList[i]];
-			}
+      }
 
       if (!utils.checkExists(opt.source)) {
   			if (utils.checkExists(video.target.attr('src'))) {
@@ -130,6 +147,8 @@
 			}
 
 			video.target.bind('ended', video.ended);
+
+
 		}
 
     return video;

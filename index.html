@@ -18,27 +18,18 @@
 			var video1 = simplevideo.init({
 				target: $('#video1'),
 				autoplay: true,
-				onplay: function() {
+				onPlay: function() {
 					console.log('playing');
 				},
-				onpause: function() {
+				onPause: function() {
 					console.log('paused');
 				},
-				onended: function() {
+				onEnded: function() {
 					console.log('ended');
 				}
 			});
 			var video2 = simplevideo.init({
 				target: $('#video2'),
-				onplay: function() {
-					console.log('playing');
-				},
-				onpause: function() {
-					console.log('paused');
-				},
-				onended: function() {
-					console.log('ended');
-				}
 			});
 
 		</script>
