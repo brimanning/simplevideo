@@ -51,7 +51,7 @@
 				target[0].currentTime = time;
 			}
 		};
-	w.simplevid = {};
+	w.simplevideo = {};
 	utils.resizeFunctions = [];
 	utils.addEventOnWindowResize = function (f) {
 		$(w).bind('resize', f);
@@ -84,7 +84,7 @@
 			obj();
 		}
 	};
-	w.simplevid.init = function(options) {
+	w.simplevideo.init = function(options) {
 		if (utils.checkExists(options.target)) {
 			if (options.target instanceof jQuery) {
 				target = options.target;
@@ -109,13 +109,13 @@
 			target.bind('ended', vidInterface.ended);
 		}
 	};
-	w.simplevid.play = function() {
+	w.simplevideo.play = function() {
 		vidInterface.play();
 	};
-	w.simplevid.pause = function() {
+	w.simplevideo.pause = function() {
 		vidInterface.pause();
 	};
-	w.simplevid.setTime = function(time) {
+	w.simplevideo.setTime = function(time) {
 		//TODO: detect if format is percentage or time format
 		vidInterface.setTime(time);
 	};
