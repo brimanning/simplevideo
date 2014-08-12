@@ -15,8 +15,9 @@
 	var
     defaultOpts = {
 			autoplay : false,
-			source: null,
+			src: null,
 			poster: null,
+      controls: false,
 			onPlay: null,
 			onPause: null,
 			onEnded: function() {
@@ -28,7 +29,7 @@
 		},
 		optsList = [
 			'autoplay',
-			'source',
+			'src',
 			'poster',
 			'onPlay',
 			'onPause',
@@ -37,6 +38,11 @@
       'onPlaying',
       'onPlayingInterval'
 		],
+    attrsList = [
+      'autoplay',
+      'src',
+      'poster'
+    ],
 		utils = {};
 
 	w.simplevideo = {};
@@ -129,17 +135,21 @@
 		if (utils.checkExists(video.target) && video.target.length > 0) {
 			for (var i = 0, l = optsList.length; i < l; i++) {
 				opt[optsList[i]] = utils.checkExists(options[optsList[i]]) ? options[optsList[i]] : defaultOpts[optsList[i]];
-      }
-
-      if (!utils.checkExists(opt.source)) {
-  			if (utils.checkExists(video.target.attr('src'))) {
-          opt.source = video.target.attr('src');
-        } else if (video.target.find('source').length > 0 && utils.checkExists(video.target.find('source').attr('src'))) {
-          opt.source = video.target.find('source').attr('src');
+        if ((!utils.checkExists(opt[optsList[i]]) || !utils.checkExists(options[optsList[i]])) && attrsList.indexOf(optsList[i]) > -1) {
+          console.log(optsList[i]);
+          opt[optsList[i]] = utils.checkExists(video.target.attr(attrsList[i])) ? video.target.attr(attrsList[i]) : defaultOpts[optsList[i]];
+          //handle case where the attribute doesn't have a value (defaults true)
+          if (opt[optsList[i]] === video.target.attr(attrsList[i])) {
+            opt[optsList[i]] = true;
+          }
         }
       }
 
-      video.target.html('<source src="' + opt.source + '" type="video/mp4" />');
+      if (!utils.checkExists(opt.src) && video.target.find('source').length > 0 && utils.checkExists(video.target.find('source').attr('src'))) {
+        opt.src = video.target.find('source').attr('src');
+      }
+
+      video.target.html('<source src="' + opt.src + '" type="video/mp4" />');
       video.target[0].load();
 
 			if (opt.autoplay) {
