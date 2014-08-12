@@ -51,18 +51,22 @@
 				target[0].currentTime = time;
 			}
 		};
+
 	w.simplevideo = {};
+
 	utils.resizeFunctions = [];
 	utils.addEventOnWindowResize = function (f) {
 		$(w).bind('resize', f);
 		utils.resizeFunctions.push(f);
 		f();
 	};
+
 	utils.runWindowResizeEvents = function () {
 		for (var i = 0, l = utils.resizeFunctions.length; i < l; i++) {
 			utils.resizeFunctions[i]();
 		}
 	};
+
 	utils.checkSWFObject = function (cb) {
 		if (typeof swfobject === 'undefined' || swfobject === null) {
 			$.getScript(window.location.protocol + '//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js', function () {
@@ -76,15 +80,19 @@
 			}
 		}
 	};
+
 	utils.checkExists = function(obj) {
 		return typeof obj !== 'undefined' && obj !== null;
 	};
+
 	utils.ifFunctionExecute = function(obj) {
 		if (utils.checkExists(obj) && typeof obj === 'function') {
 			obj();
 		}
 	};
+
 	w.simplevideo.init = function(options) {
+    var video = {};
 		if (utils.checkExists(options.target)) {
 			if (options.target instanceof jQuery) {
 				target = options.target;
@@ -108,15 +116,20 @@
 
 			target.bind('ended', vidInterface.ended);
 		}
-	};
-	w.simplevideo.play = function() {
-		vidInterface.play();
-	};
-	w.simplevideo.pause = function() {
-		vidInterface.pause();
-	};
-	w.simplevideo.setTime = function(time) {
-		//TODO: detect if format is percentage or time format
-		vidInterface.setTime(time);
+
+    video.play = function() {
+      vidInterface.play();
+    };
+
+    video.pause = function() {
+      vidInterface.pause();
+    };
+
+    video.setTime = function(time) {
+      //TODO: detect if format is percentage or time format
+      vidInterface.setTime(time);
+    };
+
+    return video;
 	};
 }(window, jQuery));
