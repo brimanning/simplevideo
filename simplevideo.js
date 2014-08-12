@@ -25,7 +25,15 @@
 			},
 			showDefaultControlsOnMobile : true
 		},
-		optsList = ['autoplay', 'source', 'poster', 'onplay', 'onpause', 'onended', 'showDefaultControlsOnMobile'],
+		optsList = [
+			'autoplay',
+			'source',
+			'poster',
+			'onplay',
+			'onpause',
+			'onended',
+			'showDefaultControlsOnMobile'
+		],
 		utils = {},
 		vidInterface = {
 			play: function() {
