@@ -141,7 +141,6 @@
 			for (var i = 0, l = optsList.length; i < l; i++) {
 				opt[optsList[i]] = utils.checkExists(options[optsList[i]]) ? options[optsList[i]] : defaultOpts[optsList[i]];
         if ((!utils.checkExists(opt[optsList[i]]) || !utils.checkExists(options[optsList[i]])) && attrsList.indexOf(optsList[i]) > -1) {
-          console.log(optsList[i]);
           opt[optsList[i]] = utils.checkExists(video.target.attr(attrsList[i])) ? video.target.attr(attrsList[i]) : defaultOpts[optsList[i]];
           //handle case where the attribute doesn't have a value (defaults true)
           if (opt[optsList[i]] === video.target.attr(attrsList[i])) {
