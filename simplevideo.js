@@ -89,6 +89,20 @@
 		}
 	};
 
+  utils.sanitizePercent = function(p) {
+    if (typeof p === 'string') {
+      if (p.indexOf('%') > 0 && parseInt(p) <= 100 && parseInt(p) >= 0) {
+        p = parseInt(p) / 100;
+      } else if (parseInt(p) > 100) {
+        p = 1;
+      } else if (parseInt(p) < 0) {
+        p = 0;
+      }
+    }
+
+    return p;
+  };
+
 	w.simplevideo.init = function(options) {
     var video = {},
       opt = {},
@@ -116,14 +130,22 @@
     };
 
     video.setTime = function(time) {
-      if (typeof time === 'string') {
-        if (time.indexOf('%') > 0 && parseInt(time) <= 100 && parseInt(time) >= 0) {
-          time = (parseInt(time) / 100) * video.getDuration();
-        }
+      if (typeof time === 'string' && time.indexOf('%') > 0) {
+        time = utils.sanitizePercent(time) * video.getDuration();
       }
 
       video.target[0].currentTime = time;
       return video.getCurrentTime();
+    };
+
+    video.getVolume = function() {
+      return video.target[0].volume;
+    };
+
+    video.setVolume = function(volume) {
+      console.log(volume);
+      video.target[0].volume = utils.sanitizePercent(volume);
+      return video.getVolume();
     };
 
     video.play = function() {
