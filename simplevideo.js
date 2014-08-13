@@ -115,7 +115,7 @@
       if (timeInterval === null) {
         timeInterval = setInterval(function () {
           if (utils.checkExists(opt.onPlaying) && typeof opt.onPlaying === 'function') {
-            opt.onPlaying(video.target[0].currentTime, video.target[0].duration);
+            opt.onPlaying(video.getCurrentTime(), video.getDuration());
           }
         }, opt.onPlayingInterval);
       }
@@ -128,14 +128,23 @@
       utils.ifFunctionExecute(opt.onPause);
     };
 
+    video.getCurrentTime = function() {
+      return video.target[0].currentTime;
+    };
+
+    video.getDuration = function() {
+      return video.target[0].duration;
+    };
+
     video.setTime = function(time) {
       if (typeof time === 'string') {
         if (time.indexOf('%') > 0 && parseInt(time) <= 100 && parseInt(time) >= 0) {
-          time = (parseInt(time) / 100) * video.target[0].duration;
+          time = (parseInt(time) / 100) * video.getDuration();
         }
       }
 
       video.target[0].currentTime = time;
+      return video.getCurrentTime();
     };
 
     video.ended = function() {
