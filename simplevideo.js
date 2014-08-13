@@ -107,6 +107,25 @@
       video.target = video.target.find('video.simplevideo');
     }
 
+    video.getCurrentTime = function() {
+      return video.target[0].currentTime;
+    };
+
+    video.getDuration = function() {
+      return video.target[0].duration;
+    };
+
+    video.setTime = function(time) {
+      if (typeof time === 'string') {
+        if (time.indexOf('%') > 0 && parseInt(time) <= 100 && parseInt(time) >= 0) {
+          time = (parseInt(time) / 100) * video.getDuration();
+        }
+      }
+
+      video.target[0].currentTime = time;
+      return video.getCurrentTime();
+    };
+
     video.play = function() {
       video.target[0].play();
       video.paused = false;
@@ -126,25 +145,6 @@
       video.target[0].pause();
       video.paused = true;
       utils.ifFunctionExecute(opt.onPause);
-    };
-
-    video.getCurrentTime = function() {
-      return video.target[0].currentTime;
-    };
-
-    video.getDuration = function() {
-      return video.target[0].duration;
-    };
-
-    video.setTime = function(time) {
-      if (typeof time === 'string') {
-        if (time.indexOf('%') > 0 && parseInt(time) <= 100 && parseInt(time) >= 0) {
-          time = (parseInt(time) / 100) * video.getDuration();
-        }
-      }
-
-      video.target[0].currentTime = time;
-      return video.getCurrentTime();
     };
 
     video.ended = function() {
