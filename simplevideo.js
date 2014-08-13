@@ -156,7 +156,8 @@
         if ((!utils.checkExists(opt[optsList[i]]) || !utils.checkExists(options[optsList[i]])) && attrsList.indexOf(optsList[i]) > -1) {
           opt[optsList[i]] = utils.checkExists(video.target.attr(attrsList[i])) ? video.target.attr(attrsList[i]) : defaultOpts[optsList[i]];
           //handle case where the attribute doesn't have a value (defaults true)
-          if (opt[optsList[i]] === video.target.attr(attrsList[i])) {
+          console.log(attrsList[i]);
+          if (opt[optsList[i]] === attrsList[i]) {
             opt[optsList[i]] = true;
           }
         }
