@@ -129,7 +129,7 @@
       return video.target[0].duration;
     };
 
-    video.setTime = function(time) {
+    video.setCurrentTime = function(time) {
       if (typeof time === 'string' && time.indexOf('%') > 0) {
         time = utils.sanitizePercent(time) * video.getDuration();
       }
