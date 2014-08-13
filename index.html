@@ -4,16 +4,15 @@
 		<title>Simple Video Player</title>
 	</head>
 	<body>
-		<video id="video1">
-			<source src="color-run.mp4" type="video/mp4" />
-		</video>
+		<div id="video1"></div>
 
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script src="simplevideo.js"></script>
 		<script>
 			var video1 = simplevideo.init({
-				target: $('#video1'),
+				target: '#video1',
 				autoplay: true,
+				src: 'color-run.mp4',
 				onPlay: function() {
 					console.log('playing');
 				},

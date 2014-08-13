@@ -91,13 +91,16 @@
 
     video.paused = false;
 
-		if (utils.checkExists(options.target)) {
-			if (options.target instanceof jQuery) {
-				video.target = options.target;
-			} else if (typeof options.target === 'string') {
-				video.target = $(options.target);
-			}
+		if (options.target instanceof jQuery) {
+			video.target = options.target;
+		} else if (typeof options.target === 'string') {
+			video.target = $(options.target);
 		}
+
+    if (!video.target.is('video')) {
+      video.target.append('<video class="simplevideo"></video>');
+      video.target = video.target.find('video.simplevideo');
+    }
 
     video.play = function() {
       video.target[0].play();
@@ -161,8 +164,6 @@
 			}
 
 			video.target.bind('ended', video.ended);
-
-
 		}
 
     return video;
