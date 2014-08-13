@@ -18,10 +18,11 @@
 			src: null,
 			poster: null,
       controls: false,
+      loop: false,
 			onPlay: null,
 			onPause: null,
 			onEnded: function() {
-				video.target.currentTime = 0;
+				video.setTime(0);
 			},
 			showDefaultControlsOnMobile : true,
       onPlaying: null,
@@ -31,6 +32,8 @@
 			'autoplay',
 			'src',
 			'poster',
+      'controls',
+      'loop',
 			'onPlay',
 			'onPause',
 			'onEnded',
@@ -41,7 +44,9 @@
     attrsList = [
       'autoplay',
       'src',
-      'poster'
+      'poster',
+      'controls',
+      'loop'
     ],
 		utils = {};
 
@@ -138,6 +143,11 @@
       clearInterval(timeInterval);
       timeInterval = null;
       utils.ifFunctionExecute(opt.onEnded);
+
+      if (utils.checkExists(opt.loop) && opt.loop) {
+        video.setTime(0);
+        video.play();
+      }
     };
 
 		if (utils.checkExists(video.target) && video.target.length > 0) {
@@ -157,6 +167,18 @@
       }
 
       video.target.html('<source src="' + opt.src + '" type="video/mp4" />');
+      if (utils.checkExists(opt.poster)) {
+        video.target.attr('poster', opt.poster);
+      }
+      if (utils.checkExists(opt.loop)) {
+        video.target.prop('loop', opt.loop);
+      }
+      if (utils.checkExists(opt.autoplay)) {
+        video.target.prop('autoplay', opt.autoplay);
+      }
+      if (utils.checkExists(opt.controls)) {
+        video.target.prop('controls', opt.controls);
+      }
       video.target[0].load();
 
 			if (opt.autoplay) {
