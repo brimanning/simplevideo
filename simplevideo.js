@@ -94,7 +94,7 @@
       opt = {},
       timeInterval = null;
 
-    video.paused = false;
+    video.paused = true;
 
 		if (options.target instanceof jQuery) {
 			video.target = options.target;
@@ -156,7 +156,6 @@
         if ((!utils.checkExists(opt[optsList[i]]) || !utils.checkExists(options[optsList[i]])) && attrsList.indexOf(optsList[i]) > -1) {
           opt[optsList[i]] = utils.checkExists(video.target.attr(attrsList[i])) ? video.target.attr(attrsList[i]) : defaultOpts[optsList[i]];
           //handle case where the attribute doesn't have a value (defaults true)
-          console.log(attrsList[i]);
           if (opt[optsList[i]] === attrsList[i]) {
             opt[optsList[i]] = true;
           }
@@ -171,15 +170,9 @@
       if (utils.checkExists(opt.poster)) {
         video.target.attr('poster', opt.poster);
       }
-      if (utils.checkExists(opt.loop)) {
-        video.target.prop('loop', opt.loop);
-      }
-      if (utils.checkExists(opt.autoplay)) {
-        video.target.prop('autoplay', opt.autoplay);
-      }
-      if (utils.checkExists(opt.controls)) {
-        video.target.prop('controls', opt.controls);
-      }
+      video.target.prop('loop', opt.loop);
+      video.target.prop('autoplay', opt.autoplay);
+      video.target.prop('controls', opt.controls);
       video.target[0].load();
 
 			if (opt.autoplay) {
