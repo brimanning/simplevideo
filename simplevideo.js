@@ -28,7 +28,8 @@
       onPlaying: null,
       onPlayingInterval: 30,
       swfobjectUrl: 'swfobject.js',
-      swfUrl: 'simplevideo.swf'
+      swfUrl: 'simplevideo.swf',
+      playerProductInstallSwfUrl: 'playerProductInstall.swf'
 		},
 		optsList = [
 			'autoplay',
@@ -43,7 +44,8 @@
       'onPlaying',
       'onPlayingInterval',
       'swfobjectUrl',
-      'swfUrl'
+      'swfUrl',
+      'playerProductInstallSwfUrl'
 		],
     attrsList = [
       'autoplay',
@@ -272,8 +274,7 @@
             '100%',
             //TODO: determine minimum version
             '11.4.0',
-            //TODO: handle this as an option
-            'playerProductInstall.swf',
+            opt.playerProductInstallSwfUrl,
             flashVars,
             params,
             attributes,
