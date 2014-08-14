@@ -73,13 +73,10 @@ package
 			var playerHeight:int = videoHeight;
 			var ratio:Number = videoWidth / videoHeight;
 			
-			ExternalInterface.call("testing", ratio);
 			if (ratio >= (stage.stageWidth / stage.stageHeight))
 			{
-				ExternalInterface.call("testing", "player width: " + playerWidth + ", stage width: " + stage.stageWidth);
 				playerWidth = stage.stageWidth;
 				playerHeight = stage.stageWidth * ratio;
-				ExternalInterface.call("testing", "player width: " + playerWidth + ", stage width: " + stage.stageWidth);
 			}
 			else
 			{
@@ -92,10 +89,6 @@ package
 			videoPlayer.height = playerHeight;
 			videoPlayer.x = (stage.stageWidth - playerWidth) / 2;
 			videoPlayer.y = (stage.stageHeight - playerHeight) / 2;
-			ExternalInterface.call("testing", "stageWidth: " + stage.stageWidth);
-			ExternalInterface.call("testing", "stageHeight: " + stage.stageHeight);
-			ExternalInterface.call("testing", "videoPlayer width: " + playerWidth);
-			ExternalInterface.call("testing", "videoPlayer height: " + playerHeight);
 			
 		}
 		
