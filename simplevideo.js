@@ -282,16 +282,19 @@
               video.swf = e.ref;
 
               simpleVideoSwfReady = function () {
-                video.swf = swfobject.getObjectById(video.swfId);
                 if (opt.autoplay) {
                   video.play();
                 }
               }
 
               simpleVideoSwfEnded = function () {
-                video.ended();
+                //swf has the habit of calling this twice
+                if (!video.paused) {
+                  video.ended();
+                }
               }
 
+              //even though the swf should be ready, it isn't always
               var inter = setInterval(function () {
                 if (utils.checkExists(video.swf.init)) {
                   clearInterval(inter);
