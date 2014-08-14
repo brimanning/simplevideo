@@ -26,7 +26,9 @@
 			},
 			showDefaultControlsOnMobile : true,
       onPlaying: null,
-      onPlayingInterval: 30
+      onPlayingInterval: 30,
+      swfobjectUrl: 'swfobject.js',
+      swfUrl: 'simplevideo.swf'
 		},
 		optsList = [
 			'autoplay',
@@ -39,7 +41,9 @@
 			'onEnded',
 			'showDefaultControlsOnMobile',
       'onPlaying',
-      'onPlayingInterval'
+      'onPlayingInterval',
+      'swfobjectUrl',
+      'swfUrl'
 		],
     attrsList = [
       'autoplay',
@@ -65,17 +69,13 @@
 		}
 	};
 
-	utils.checkSWFObject = function (cb) {
+	utils.checkSWFObject = function (opts, cb) {
 		if (typeof swfobject === 'undefined' || swfobject === null) {
-			$.getScript(window.location.protocol + '//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js', function () {
-				if (!!cb) {
-					cb();
-				}
+			$.getScript(opts.swfobjectUrl, function () {
+				utils.ifFunctionExecute(cb);
 			});
 		} else {
-			if (!!cb) {
-				cb();
-			}
+			utils.ifFunctionExecute(cb);
 		}
 	};
 
@@ -103,12 +103,21 @@
     return p;
   };
 
+  utils.generateGuid = function() {
+    function fourString() {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+
+    return fourString() + fourString() + '-' + fourString() + '-' + fourString() + '-' + fourString() + '-' + fourString() + fourString() + fourString();
+  };
+
 	w.simplevideo.init = function(options) {
     var video = {},
       opt = {},
       timeInterval = null;
 
     video.paused = true;
+    video.needsFlash = false;
 
 		if (options.target instanceof jQuery) {
 			video.target = options.target;
@@ -119,14 +128,32 @@
     if (!video.target.is('video')) {
       video.target.append('<video class="simplevideo"></video>');
       video.target = video.target.find('video.simplevideo');
+    } else {
+      video.target.addClass('simplevideo');
+    }
+
+    if (video.target[0].canPlayType('video/mp4') === '' || true) {
+      video.needsFlash = true;
     }
 
     video.getCurrentTime = function() {
-      return video.target[0].currentTime;
+      var currentTime;
+      if (video.needsFlash) {
+        currentTime = video.swf.getCurrentTime();
+      } else {
+        currentTime = video.target[0].currentTime;
+      }
+      return currentTime;
     };
 
     video.getDuration = function() {
-      return video.target[0].duration;
+      var duration;
+      if (video.needsFlash) {
+        duration = video.swf.getDuration();
+      } else {
+        duration = video.target[0].duration;
+      }
+      return duration;
     };
 
     video.setCurrentTime = function(time) {
@@ -134,22 +161,41 @@
         time = utils.sanitizePercent(time) * video.getDuration();
       }
 
-      video.target[0].currentTime = time;
+      if (video.needsFlash) {
+        video.swf.setCurrentTime(time);
+      } else {
+        video.target[0].currentTime = time;
+      }
+
       return video.getCurrentTime();
     };
 
     video.getVolume = function() {
-      return video.target[0].volume;
+      var volume;
+      if (video.needsFlash) {
+        volume = video.swf.getVolume();
+      } else {
+        volume = video.target[0].volume;
+      }
+      return volume;
     };
 
     video.setVolume = function(volume) {
-      console.log(volume);
-      video.target[0].volume = utils.sanitizePercent(volume);
+      if (video.needsFlash) {
+        video.swf.setVolume(utils.sanitizePercent(volume));
+      } else {
+        video.target[0].volume = utils.sanitizePercent(volume);
+      }
+
       return video.getVolume();
     };
 
     video.play = function() {
-      video.target[0].play();
+      if (video.needsFlash) {
+        video.swf.play();
+      } else {
+        video.target[0].play();
+      }
       video.paused = false;
       utils.ifFunctionExecute(opt.onPlay);
 
@@ -164,7 +210,11 @@
 
     video.pause = function() {
       clearInterval(timeInterval);
-      video.target[0].pause();
+      if (video.needsFlash) {
+        video.swf.pause();
+      } else {
+        video.target[0].pause();
+      }
       video.paused = true;
       utils.ifFunctionExecute(opt.onPause);
     };
@@ -197,20 +247,76 @@
         opt.src = video.target.find('source').attr('src');
       }
 
-      video.target.html('<source src="' + opt.src + '" type="video/mp4" />');
-      if (utils.checkExists(opt.poster)) {
-        video.target.attr('poster', opt.poster);
+      if (video.needsFlash) {
+
+        utils.checkSWFObject(opt, function() {
+          video.swfId = utils.generateGuid();
+          video.target.replaceWith('<div class="simplevideo"><div id="' + video.swfId + '"></div></div>');
+          var flashVars = {},
+            params = {
+              quality: 'high',
+              bgcolor: '#ffffff',
+              allowscriptaccess: 'always',
+              allowfullscreen: 'true',
+              wmode: 'transparent'
+            },
+            attributes = {
+              id: video.swfId,
+              name: video.swfId,
+              align: 'middle'
+            };
+          swfobject.embedSWF(
+            opt.swfUrl,
+            video.swfId,
+            '100%',
+            '100%',
+            //TODO: determine minimum version
+            '11.4.0',
+            //TODO: handle this as an option
+            'playerProductInstall.swf',
+            flashVars,
+            params,
+            attributes,
+            function(e) {
+              video.swf = e.ref;
+
+              simpleVideoSwfReady = function () {
+                video.swf = swfobject.getObjectById(video.swfId);
+                if (opt.autoplay) {
+                  video.play();
+                }
+              }
+
+              simpleVideoSwfEnded = function () {
+                video.ended();
+              }
+
+              var inter = setInterval(function () {
+                if (utils.checkExists(video.swf.init)) {
+                  clearInterval(inter);
+                  video.swf.init(opt.src);
+                }
+              }, 10);
+            }
+          );
+        });
+
+      } else {
+        video.target.html('<source src="' + opt.src + '" type="video/mp4" />');
+        if (utils.checkExists(opt.poster)) {
+          video.target.attr('poster', opt.poster);
+        }
+        video.target.prop('loop', opt.loop);
+        video.target.prop('autoplay', opt.autoplay);
+        video.target.prop('controls', opt.controls);
+        video.target[0].load();
+
+        if (opt.autoplay) {
+          video.play();
+        }
+
+        video.target.bind('ended', video.ended);
       }
-      video.target.prop('loop', opt.loop);
-      video.target.prop('autoplay', opt.autoplay);
-      video.target.prop('controls', opt.controls);
-      video.target[0].load();
-
-			if (opt.autoplay) {
-				video.play();
-			}
-
-			video.target.bind('ended', video.ended);
 		}
 
     return video;

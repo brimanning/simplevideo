@@ -9,6 +9,7 @@
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script src="simplevideo.js"></script>
 		<script>
+			function testing (message) { console.log(message); }
 			var video1 = simplevideo.init({
 				target: '#video1',
 				src: 'color-run.mp4',
@@ -21,7 +22,9 @@
 				onEnded: function() {
 					video1.setTime(0);
 				},
-				controls: true
+				controls: true,
+				swfUrl: 'swf/bin-debug/simplevideo.swf',
+				swfobjectUrl: 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
 			});
 			$('#video1').click(function(e) {
 				if (video1.paused) {
