@@ -22,6 +22,8 @@ package
 		
 		public function simplevideo()
 		{
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
 			OSMFSettings.enableStageVideo = true;
 			initializeExternalInterface();
 		}
@@ -71,26 +73,18 @@ package
 			var playerHeight:int = videoHeight;
 			var ratio:Number = videoWidth / videoHeight;
 			
-			if (videoWidth > stage.stageWidth || videoHeight > stage.stageHeight)
+			ExternalInterface.call("testing", ratio);
+			if (ratio >= (stage.stageWidth / stage.stageHeight))
 			{
-				ExternalInterface.call("testing", ratio);
-				if (ratio >= (stage.stageWidth / stage.stageHeight))
-				{
-					ExternalInterface.call("testing", "player width: " + playerWidth + ", stage width: " + stage.stageWidth);
-					playerWidth = stage.stageWidth;
-					playerHeight = stage.stageWidth * ratio;
-					ExternalInterface.call("testing", "player width: " + playerWidth + ", stage width: " + stage.stageWidth);
-				}
-				else
-				{
-					playerWidth = stage.stageHeight * ratio;
-					playerHeight = stage.stageHeight;
-				}
+				ExternalInterface.call("testing", "player width: " + playerWidth + ", stage width: " + stage.stageWidth);
+				playerWidth = stage.stageWidth;
+				playerHeight = stage.stageWidth * ratio;
+				ExternalInterface.call("testing", "player width: " + playerWidth + ", stage width: " + stage.stageWidth);
 			}
-			else if (width > 0 && height > 0)
+			else
 			{
-				playerWidth = width;
-				playerHeight = height;
+				playerWidth = stage.stageHeight * ratio;
+				playerHeight = stage.stageHeight;
 			}
 			
 			//need to handle it this way because videoPlayer.width and videoPlayer.height always return 0
