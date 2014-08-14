@@ -56,7 +56,11 @@
                 "simplevideo.swf", "flashContent", 
                 "100%", "100%", 
                 swfVersionStr, xiSwfUrlStr, 
-                flashvars, params, attributes);
+                flashvars, params, attributes,
+                function(e) {
+                	s = swfobject.getObjectById('simplevideo');
+                }
+            );
             // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
             swfobject.createCSS("#flashContent", "display:block;text-align:left;");
         </script>
