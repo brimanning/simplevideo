@@ -134,7 +134,7 @@
       video.target.addClass('simplevideo');
     }
 
-    if (video.target[0].canPlayType('video/mp4') === '' || true) {
+    if (video.target[0].canPlayType('video/mp4') === '') {
       video.needsFlash = true;
     }
 
@@ -221,7 +221,7 @@
       utils.ifFunctionExecute(opt.onPause);
     };
 
-    video.ended = function() {
+    var ended = function() {
       video.paused = true;
       clearInterval(timeInterval);
       timeInterval = null;
@@ -290,7 +290,7 @@
               simpleVideoSwfEnded = function () {
                 //swf has the habit of calling this twice
                 if (!video.paused) {
-                  video.ended();
+                  ended();
                 }
               }
 
@@ -319,7 +319,7 @@
           video.play();
         }
 
-        video.target.bind('ended', video.ended);
+        video.target.bind('ended', ended);
       }
 		}
 
