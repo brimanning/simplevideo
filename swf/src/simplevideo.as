@@ -58,13 +58,13 @@ package
 			if (event.loadState == LoadState.READY)
 			{
 				addChild(videoPlayer);
-				ExternalInterface.call("ready");
+				ExternalInterface.call("simpleVideoSwfReady");
 			}
 		}
 		
 		private function onVideoEnded(evt:TimeEvent):void
 		{
-			ExternalInterface.call("ended");
+			ExternalInterface.call("simpleVideoSwfEnded");
 		}
 		
 		private function resize():void
