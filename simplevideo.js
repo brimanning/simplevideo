@@ -11,7 +11,7 @@
  * Copyright 2014 Brian Manning
  * Released under the MIT license
  *
- * Date: 8/13/2014
+ * Date: 8/14/2014
  */
 
 (function (w, $) {
