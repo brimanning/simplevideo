@@ -5,6 +5,9 @@
  * Uses jQuery.js
  * http://jquery.com/
  *
+ * Uses swfobject.js
+ * https://code.google.com/p/swfobject
+ *
  * Copyright 2014 Brian Manning
  * Released under the MIT license
  *
