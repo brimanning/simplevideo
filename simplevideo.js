@@ -12,41 +12,41 @@
  */
 
 (function (w, $) {
-	var
+  var
     defaultOpts = {
       src: null,
-			autoplay : false,
-			poster: null,
+      autoplay : false,
+      poster: null,
       controls: false,
       loop: false,
-			onPlay: null,
-			onPause: null,
-			onEnded: function() {
-				video.setTime(0);
-			},
-			showDefaultControlsOnMobile : true,
+      onPlay: null,
+      onPause: null,
+      onEnded: function() {
+        video.setTime(0);
+      },
+      showDefaultControlsOnMobile : true,
       onPlaying: null,
       onPlayingInterval: 30,
       swfobjectUrl: 'swfobject.js',
       swfUrl: 'simplevideo.swf',
       playerProductInstallSwfUrl: 'playerProductInstall.swf'
-		},
-		optsList = [
+    },
+    optsList = [
       'src',
-			'autoplay',
-			'poster',
+      'autoplay',
+      'poster',
       'controls',
       'loop',
-			'onPlay',
-			'onPause',
-			'onEnded',
-			'showDefaultControlsOnMobile',
+      'onPlay',
+      'onPause',
+      'onEnded',
+      'showDefaultControlsOnMobile',
       'onPlaying',
       'onPlayingInterval',
       'swfobjectUrl',
       'swfUrl',
       'playerProductInstallSwfUrl'
-		],
+    ],
     attrsList = [
       'src',
       'autoplay',
@@ -54,42 +54,42 @@
       'controls',
       'loop'
     ],
-		utils = {};
+    utils = {};
 
-	w.simplevideo = {};
+  w.simplevideo = {};
 
-	utils.resizeFunctions = [];
-	utils.addEventOnWindowResize = function (f) {
-		$(w).bind('resize', f);
-		utils.resizeFunctions.push(f);
-		f();
-	};
+  utils.resizeFunctions = [];
+  utils.addEventOnWindowResize = function (f) {
+    $(w).bind('resize', f);
+    utils.resizeFunctions.push(f);
+    f();
+  };
 
-	utils.runWindowResizeEvents = function () {
-		for (var i = 0, l = utils.resizeFunctions.length; i < l; i++) {
-			utils.resizeFunctions[i]();
-		}
-	};
+  utils.runWindowResizeEvents = function () {
+    for (var i = 0, l = utils.resizeFunctions.length; i < l; i++) {
+      utils.resizeFunctions[i]();
+    }
+  };
 
-	utils.checkSWFObject = function (opts, cb) {
-		if (typeof swfobject === 'undefined' || swfobject === null) {
-			$.getScript(opts.swfobjectUrl, function () {
-				utils.ifFunctionExecute(cb);
-			});
-		} else {
-			utils.ifFunctionExecute(cb);
-		}
-	};
+  utils.checkSWFObject = function (opts, cb) {
+    if (typeof swfobject === 'undefined' || swfobject === null) {
+      $.getScript(opts.swfobjectUrl, function () {
+        utils.ifFunctionExecute(cb);
+      });
+    } else {
+      utils.ifFunctionExecute(cb);
+    }
+  };
 
-	utils.checkExists = function(obj) {
-		return typeof obj !== 'undefined' && obj !== null;
-	};
+  utils.checkExists = function(obj) {
+    return typeof obj !== 'undefined' && obj !== null;
+  };
 
-	utils.ifFunctionExecute = function(obj) {
-		if (utils.checkExists(obj) && typeof obj === 'function') {
-			obj();
-		}
-	};
+  utils.ifFunctionExecute = function(obj) {
+    if (utils.checkExists(obj) && typeof obj === 'function') {
+      obj();
+    }
+  };
 
   utils.sanitizePercent = function(p) {
     if (typeof p === 'string') {
@@ -113,7 +113,7 @@
     return fourString() + fourString() + '-' + fourString() + '-' + fourString() + '-' + fourString() + '-' + fourString() + fourString() + fourString();
   };
 
-	w.simplevideo.init = function(options) {
+  w.simplevideo.init = function(options) {
     var video = {},
       opt = {},
       timeInterval = null;
@@ -121,11 +121,11 @@
     video.paused = true;
     video.needsFlash = false;
 
-		if (options.target instanceof jQuery) {
-			video.target = options.target;
-		} else if (typeof options.target === 'string') {
-			video.target = $(options.target);
-		}
+    if (options.target instanceof jQuery) {
+      video.target = options.target;
+    } else if (typeof options.target === 'string') {
+      video.target = $(options.target);
+    }
 
     if (!video.target.is('video')) {
       video.target.append('<video class="simplevideo"></video>');
@@ -233,9 +233,9 @@
       }
     };
 
-		if (utils.checkExists(video.target) && video.target.length > 0) {
-			for (var i = 0, l = optsList.length; i < l; i++) {
-				opt[optsList[i]] = utils.checkExists(options[optsList[i]]) ? options[optsList[i]] : defaultOpts[optsList[i]];
+    if (utils.checkExists(video.target) && video.target.length > 0) {
+      for (var i = 0, l = optsList.length; i < l; i++) {
+        opt[optsList[i]] = utils.checkExists(options[optsList[i]]) ? options[optsList[i]] : defaultOpts[optsList[i]];
         if ((!utils.checkExists(opt[optsList[i]]) || !utils.checkExists(options[optsList[i]])) && attrsList.indexOf(optsList[i]) > -1) {
           opt[optsList[i]] = utils.checkExists(video.target.attr(attrsList[i])) ? video.target.attr(attrsList[i]) : defaultOpts[optsList[i]];
           //handle case where the attribute doesn't have a value (defaults true)
@@ -321,8 +321,8 @@
 
         video.target.bind('ended', ended);
       }
-		}
+    }
 
     return video;
-	};
+  };
 }(window, jQuery));
