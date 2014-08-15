@@ -1,0 +1,31 @@
+{
+  "name": "simplevideo",
+  "main": "simplevideo.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/brimanning/simplevideo",
+  "authors": [
+    "Brian Manning <bri@brimanning.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brimanning/simplevideo.git"
+  },
+  "description": "Lightest HTML5 video library with a Flash fallback around",
+  "keywords": [
+    "html5",
+    "video",
+    "flash"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "swfobject": "*",
+    "jquery": "~2.1.1"
+  }
+}
