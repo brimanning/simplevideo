@@ -14,8 +14,8 @@
 (function (w, $) {
 	var
     defaultOpts = {
+      src: null,
 			autoplay : false,
-			src: null,
 			poster: null,
       controls: false,
       loop: false,
@@ -32,8 +32,8 @@
       playerProductInstallSwfUrl: 'playerProductInstall.swf'
 		},
 		optsList = [
+      'src',
 			'autoplay',
-			'src',
 			'poster',
       'controls',
       'loop',
@@ -48,8 +48,8 @@
       'playerProductInstallSwfUrl'
 		],
     attrsList = [
-      'autoplay',
       'src',
+      'autoplay',
       'poster',
       'controls',
       'loop'
