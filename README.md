@@ -124,4 +124,4 @@ Brian Manning
 
 License
 ===
-Code and documentation copyright 2014 Brian Manning. Code released under the MIT license. Docs released under Creative Commons.
+Code and documentation copyright 2014 Brian Manning. Code released under the [MIT license](https://github.com/brimanning/simplevideo/blob/master/LICENSE.md).
