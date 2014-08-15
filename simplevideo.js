@@ -13,7 +13,7 @@
 
 (function (w, $) {
 	var
-    defaultOpts = {
+	  defaultOpts = {
       src: null,
 			autoplay : false,
 			poster: null,
