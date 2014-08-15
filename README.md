@@ -1,6 +1,8 @@
 About simplevideo
 ===
 
+__Note: This library is still very much in an alpha state. I haven't tested older versions of browsers, much mobile support, nor I have tested many versions of Flash. The latest versions of Firefox, Chrome, and Safari on Mac OSX 10.9. I'm hoping to test other cases in the near future.__
+
 The aim of simplevideo is to create a very light-weight interface for video on the web. videojs and JW Player are great on their own merits, but some developers need a simpler solution that's much closer to the video element itself. simplevideo aims to be that lower-level solution.
 
 Quick Start
