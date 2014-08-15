@@ -18,7 +18,7 @@ Usage
 ===
 simplevideo takes a target element to turn into an HTML5 video tag or falls back to a Flash embed if the user's browser does not support the video's mimetype. Note: simplevideo only currently supports mp4 videos, but more support is coming.
 
-You'll need to reference jQuery and simplevideo on your page
+You'll need to reference jQuery and simplevideo on your page.
 
 	<head>
 		<script src="jquery.js"></script>
