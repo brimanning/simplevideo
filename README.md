@@ -9,7 +9,7 @@ Quick Start
 ===
 + Download from above
 + Clone: `git clone https://github.com/brimanning/simplevideo.git`
-+ Coming: Bower
++ Bower: `bower install simplevideo`
 
 Dependencies
 ===
