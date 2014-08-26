@@ -198,10 +198,11 @@
     video.play = function() {
       if (video.needsFlash) {
         video.swf.play();
+        video.paused = false;
       } else {
         video.target[0].play();
+        video.paused = video.target[0].paused;
       }
-      video.paused = false;
       utils.ifFunctionExecute(opt.onPlay);
 
       if (timeInterval === null) {
@@ -217,10 +218,11 @@
       clearInterval(timeInterval);
       if (video.needsFlash) {
         video.swf.pause();
+        video.paused = true;
       } else {
         video.target[0].pause();
+        video.paused = video.target[0].paused;
       }
-      video.paused = true;
       utils.ifFunctionExecute(opt.onPause);
     };
 
