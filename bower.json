@@ -1,7 +1,7 @@
 {
   "name": "simplevideo",
   "main": "simplevideo.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/brimanning/simplevideo",
   "authors": [
     "Brian Manning <bri@brimanning.com>"
