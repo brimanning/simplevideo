@@ -259,7 +259,6 @@
           attributes,
           function(e) {
             video.swf = e.ref;
-            console.log(e.ref);
 
             w.simpleVideoSwfReady = function () {
               if (opt.autoplay) {
