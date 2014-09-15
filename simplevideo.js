@@ -167,6 +167,37 @@
         }
       };
 
+      video.fullscreen = function(fullscreen) {
+        if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
+          if (!utils.checkExists(fullscreen)) {
+            fullscreen = true;
+          }
+          if (fullscreen) {
+            //enter fullscreen
+            if (video.target.get(0).requestFullscreen) {
+              video.target.get(0).requestFullscreen();
+            } else if (video.target.get(0).msRequestFullscreen) {
+              video.target.get(0).msRequestFullscreen();
+            } else if (video.target.get(0).mozRequestFullScreen) {
+              video.target.get(0).mozRequestFullScreen();
+            } else if (video.target.get(0).webkitRequestFullscreen) {
+              video.target.get(0).webkitRequestFullscreen();
+            }
+          } else {
+            //exit fullscreen
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.msExitFullscreen) {
+              document.msExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+              document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen();
+            }
+          }
+        }
+      };
+
       return video;
     },
     timeInterval = null,

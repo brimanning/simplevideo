@@ -6,6 +6,7 @@
 	<body>
 		<video id="video1"></video>
 		<video id="video2"></video>
+		<button id="video2-fullscreen">Fullscreen Video #2</button>
 
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="simplevideo.js"></script>
@@ -48,6 +49,9 @@
 				} else {
 					video1.pause();
 				}
+			});
+			$('#video2-fullscreen').click(function(e) {
+				video2.fullscreen(true);
 			});
 		</script>
 	</body>
