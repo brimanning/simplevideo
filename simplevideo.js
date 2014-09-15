@@ -274,10 +274,12 @@
       });
 
       video.target.bind('pause', function() {
+        video.paused = video.target[0].paused;
         utils.ifFunctionExecute(opt.onPause);
       });
 
       video.target.bind('play', function() {
+        video.paused = video.target[0].paused;
         utils.ifFunctionExecute(opt.onPlay);
       });
     };
