@@ -112,6 +112,7 @@ In addition, there are a few methods and properties returned in the simplevideo 
 + `setVolume(zeroToOneOrPercentage)` - sets the volume of the video element from 0 to 1 or a percent in the form of a string `'50%'` to put the volume halfway up
 + `play()` - play the video from it's current location (triggers the `onPlay` callback)
 + `pause()` - pause the video (triggers the `onPause` callback)
++ `fullscreen(trueToEnterFullscreenAndFalseToExit)` - places the video in fullscreen mode (note: to enter fullscreen in webkit broswers, this needs to be triggered as part of a click or keyboard action)
 + `target` - the jQuery element of the video itself or the container of the swf
 + `swf` - the swf element created (if Flash is required)
 + `swfId` - a randomly generated uuid to differentiate the swf element (if Flash is required)
