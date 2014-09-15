@@ -5,6 +5,7 @@
 	</head>
 	<body>
 		<video id="video1"></video>
+		<video id="video2"></video>
 
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="simplevideo.js"></script>
@@ -14,15 +15,31 @@
 				target: '#video1',
 				src: 'color-run.mp4',
 				onPlay: function() {
-					console.log('playing');
+					console.log('playing video 1');
 				},
 				onPause: function() {
-					console.log('paused');
+					console.log('paused video 1');
 				},
 				onEnded: function() {
 					video1.setCurrentTime(0);
 				},
 				controls: true,
+				swfobjectUrl: 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
+			}),
+			video2 = simplevideo.init({
+				target: '#video2',
+				src: 'color-run.mp4',
+				onPlay: function() {
+					console.log('playing video 2');
+				},
+				onPause: function() {
+					console.log('paused video 2');
+				},
+				onEnded: function() {
+					console.log('ended video 2');
+				},
+				controls: true,
+				autoplay: true,
 				swfobjectUrl: 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
 			});
 			$('#video1').click(function(e) {
