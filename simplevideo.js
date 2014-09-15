@@ -14,7 +14,7 @@
  * Date: 8/14/2014
  */
 
-(function (w, $, swfobject) {
+(function (w, $) {
   var
     defaultOpts = {
       src: null,
@@ -140,11 +140,11 @@
         if (video.needsFlash) {
           video.swf.play();
           video.paused = false;
+          utils.ifFunctionExecute(opt.onPlay);
         } else {
           video.target[0].play();
           video.paused = video.target[0].paused;
         }
-        utils.ifFunctionExecute(opt.onPlay);
 
         if (timeInterval === null) {
           timeInterval = setInterval(function () {
@@ -160,11 +160,11 @@
         if (video.needsFlash) {
           video.swf.pause();
           video.paused = true;
+          utils.ifFunctionExecute(opt.onPause);
         } else {
           video.target[0].pause();
           video.paused = video.target[0].paused;
         }
-        utils.ifFunctionExecute(opt.onPause);
       };
 
       return video;
@@ -215,7 +215,7 @@
             name: video.swfId,
             align: 'middle'
           };
-        swfobject.embedSWF(
+        w.swfobject.embedSWF(
           opt.swfUrl,
           video.swfId,
           '100%',
@@ -228,6 +228,7 @@
           attributes,
           function(e) {
             video.swf = e.ref;
+            console.log(e.ref);
 
             w.simpleVideoSwfReady = function () {
               if (opt.autoplay) {
@@ -271,6 +272,14 @@
       video.target.bind('ended', function() {
         ended(video, opt);
       });
+
+      video.target.bind('pause', function() {
+        utils.ifFunctionExecute(opt.onPause);
+      });
+
+      video.target.bind('play', function() {
+        utils.ifFunctionExecute(opt.onPlay);
+      });
     };
 
   w.simplevideo = {};
@@ -289,7 +298,7 @@
   };
 
   utils.checkSWFObject = function (opts, cb) {
-    if (typeof swfobject === 'undefined' || swfobject === null) {
+    if (typeof w.swfobject === 'undefined' || w.swfobject === null) {
       $.getScript(opts.swfobjectUrl, function () {
         utils.ifFunctionExecute(cb);
       });
@@ -346,4 +355,4 @@
 
     return video;
   };
-}(window, jQuery, window.swofobject));
+}(window, jQuery));
