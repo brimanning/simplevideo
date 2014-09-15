@@ -96,11 +96,11 @@
 
   utils.sanitizePercent = function(p) {
     if (typeof p === 'string') {
-      if (p.indexOf('%') > 0 && parseInt(p) <= 100 && parseInt(p) >= 0) {
-        p = parseInt(p) / 100;
-      } else if (parseInt(p) > 100) {
+      if (p.indexOf('%') > 0 && parseInt(p, 10) <= 100 && parseInt(p, 10) >= 0) {
+        p = parseInt(p, 10) / 100;
+      } else if (parseInt(p, 10) > 100) {
         p = 1;
-      } else if (parseInt(p) < 0) {
+      } else if (parseInt(p, 10) < 0) {
         p = 0;
       }
     }
