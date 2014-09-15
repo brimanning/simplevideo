@@ -14,7 +14,7 @@
  * Date: 8/14/2014
  */
 
-(function (w, $) {
+(function (w, $, swfobject) {
   var
     defaultOpts = {
       src: null,
@@ -25,7 +25,9 @@
       onPlay: null,
       onPause: null,
       onEnded: function() {
-        video.setTime(0);
+        if (utils.checkExists(video) && utils.checkExists(video.setTime)) {
+          video.setTime(0);
+        }
       },
       showDefaultControlsOnMobile : true,
       onPlaying: null,
@@ -286,18 +288,18 @@
             function(e) {
               video.swf = e.ref;
 
-              simpleVideoSwfReady = function () {
+              w.simpleVideoSwfReady = function () {
                 if (opt.autoplay) {
                   video.play();
                 }
-              }
+              };
 
-              simpleVideoSwfEnded = function () {
+              w.simpleVideoSwfEnded = function () {
                 //swf has the habit of calling this twice
                 if (!video.paused) {
                   ended();
                 }
-              }
+              };
 
               //even though the swf should be ready, it isn't always
               var inter = setInterval(function () {
@@ -330,4 +332,4 @@
 
     return video;
   };
-}(window, jQuery));
+}(window, jQuery, window.swofobject));
