@@ -173,15 +173,23 @@
             fullscreen = true;
           }
           if (fullscreen) {
+            var requestFullscreen = function(elem) {
+              if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+              } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+              } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+              } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+              }
+            };
+
             //enter fullscreen
-            if (video.target.get(0).requestFullscreen) {
-              video.target.get(0).requestFullscreen();
-            } else if (video.target.get(0).msRequestFullscreen) {
-              video.target.get(0).msRequestFullscreen();
-            } else if (video.target.get(0).mozRequestFullScreen) {
-              video.target.get(0).mozRequestFullScreen();
-            } else if (video.target.get(0).webkitRequestFullscreen) {
-              video.target.get(0).webkitRequestFullscreen();
+            if (video.needsFlash) {
+              requestFullscreen(video.swf);
+            } else {
+              requestFullscreen(video.target.get(0));
             }
           } else {
             //exit fullscreen
