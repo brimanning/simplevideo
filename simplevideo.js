@@ -78,7 +78,7 @@
         video.target.addClass('simplevideo');
       }
 
-      if (video.target[0].canPlayType('video/mp4') === '') {
+      if (video.target.get(0).canPlayType('video/mp4') === '') {
         video.needsFlash = true;
       }
 
@@ -87,7 +87,7 @@
         if (video.needsFlash) {
           currentTime = video.swf.getCurrentTime();
         } else {
-          currentTime = video.target[0].currentTime;
+          currentTime = video.target.get(0).currentTime;
         }
         return currentTime;
       };
@@ -97,7 +97,7 @@
         if (video.needsFlash) {
           duration = video.swf.getDuration();
         } else {
-          duration = video.target[0].duration;
+          duration = video.target.get(0).duration;
         }
         return duration;
       };
@@ -110,7 +110,7 @@
         if (video.needsFlash) {
           video.swf.setCurrentTime(time);
         } else {
-          video.target[0].currentTime = time;
+          video.target.get(0).currentTime = time;
         }
 
         return video.getCurrentTime();
@@ -121,7 +121,7 @@
         if (video.needsFlash) {
           volume = video.swf.getVolume();
         } else {
-          volume = video.target[0].volume;
+          volume = video.target.get(0).volume;
         }
         return volume;
       };
@@ -130,7 +130,7 @@
         if (video.needsFlash) {
           video.swf.setVolume(utils.sanitizePercent(volume));
         } else {
-          video.target[0].volume = utils.sanitizePercent(volume);
+          video.target.get(0).volume = utils.sanitizePercent(volume);
         }
 
         return video.getVolume();
@@ -142,8 +142,8 @@
           video.paused = false;
           utils.ifFunctionExecute(opt.onPlay);
         } else {
-          video.target[0].play();
-          video.paused = video.target[0].paused;
+          video.target.get(0).play();
+          video.paused = video.target.get(0).paused;
         }
 
         if (timeInterval === null) {
@@ -162,8 +162,8 @@
           video.paused = true;
           utils.ifFunctionExecute(opt.onPause);
         } else {
-          video.target[0].pause();
-          video.paused = video.target[0].paused;
+          video.target.get(0).pause();
+          video.paused = video.target.get(0).paused;
         }
       };
 
@@ -263,7 +263,7 @@
       video.target.prop('loop', opt.loop);
       video.target.prop('autoplay', opt.autoplay);
       video.target.prop('controls', opt.controls);
-      video.target[0].load();
+      video.target.get(0).load();
 
       if (opt.autoplay) {
         video.play();
@@ -274,12 +274,12 @@
       });
 
       video.target.bind('pause', function() {
-        video.paused = video.target[0].paused;
+        video.paused = video.target.get(0).paused;
         utils.ifFunctionExecute(opt.onPause);
       });
 
       video.target.bind('play', function() {
-        video.paused = video.target[0].paused;
+        video.paused = video.target.get(0).paused;
         utils.ifFunctionExecute(opt.onPlay);
       });
     };
