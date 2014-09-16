@@ -1,5 +1,5 @@
-/*!
- * Simple Video JavaScript Library v0.1.2
+/*
+ * simplevideo JavaScript Library v0.1.2
  * https://github.com/brimanning/simplevideo
  *
  * Uses jQuery.js
