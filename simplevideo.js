@@ -1,5 +1,5 @@
 /*!
- * Simple Video JavaScript Library v0.1
+ * Simple Video JavaScript Library v0.1.2
  * https://github.com/brimanning/simplevideo
  *
  * Uses jQuery.js
@@ -11,7 +11,7 @@
  * Copyright 2014 Brian Manning
  * Released under the MIT license
  *
- * Date: 8/14/2014
+ * Date: 9/16/2014
  */
 
 (function (w, $) {
