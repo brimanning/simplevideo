@@ -113,6 +113,7 @@ In addition, there are a few methods and properties returned in the simplevideo 
 + `play()` - play the video from it's current location (triggers the `onPlay` callback)
 + `pause()` - pause the video (triggers the `onPause` callback)
 + `fullscreen(trueToEnterFullscreenAndFalseToExit)` - places the video in fullscreen mode (note: to enter fullscreen in webkit broswers, this needs to be triggered as part of a click or keyboard action)
++ `paused` - whether or not the video is currently paused
 + `target` - the jQuery element of the video itself or the container of the swf
 + `swf` - the swf element created (if Flash is required)
 + `swfId` - a randomly generated uuid to differentiate the swf element (if Flash is required)
