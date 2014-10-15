@@ -33,7 +33,7 @@ From there, you'll be able to create video elements on the page normally and sim
 	<script>
 		simplevideo.init({
 			target: '#mySimpleVideo',
-			src: 'myVideoFilePath.mp4
+			src: 'myVideoFilePath.mp4'
 		});
 	</script>
 
