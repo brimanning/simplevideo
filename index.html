@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>simplevideo by brimanning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">simplevideo</h1>
+      <h2 class="project-tagline">Lightest HTML5 Video Library with a Flash Fallback Around</h2>
+      <a href="https://github.com/brimanning/simplevideo" class="btn">View on GitHub</a>
+      <a href="https://github.com/brimanning/simplevideo/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/brimanning/simplevideo/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="about-simplevideo" class="anchor" href="#about-simplevideo" aria-hidden="true"><span class="octicon octicon-link"></span></a>About simplevideo</h1>
+
+<p><strong>Note: This library is still very much in an alpha state. Older versions of browsers, mobile support, nor many versions of Flash have been tested yet. simplevideo works without issue in the latest versions of Firefox, Chrome, and Safari on Mac OSX 10.9. More testing will happen in the near future.</strong></p>
+
+<p>The aim of simplevideo is to create a very light-weight interface for video on the web. videojs and JW Player are great on their own merits, but some developers need a simpler solution that's much closer to the video element itself. simplevideo aims to be that lower-level solution.</p>
+
+<h1>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Start</h1>
+
+<ul>
+<li>Download from above</li>
+<li>Clone: <code>git clone https://github.com/brimanning/simplevideo.git</code>
+</li>
+<li>Bower: <code>bower install simplevideo</code>
+</li>
+</ul>
+
+<h1>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h1>
+
+<ul>
+<li><a href="http://jquery.com">jQuery</a></li>
+<li><a href="https://code.google.com/p/swfobject">swfobject</a></li>
+</ul>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>simplevideo takes a target element to turn into an HTML5 video tag or falls back to a Flash embed if the user's browser does not support the video's mimetype. Note: simplevideo only currently supports mp4 videos, but more support is coming.</p>
+
+<p>You'll need to reference jQuery and simplevideo on your page.</p>
+
+<pre><code>&lt;head&gt;
+    &lt;script src="jquery.js"&gt;&lt;/script&gt;
+    &lt;script src="simplevideo.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+</code></pre>
+
+<p>From there, you'll be able to create video elements on the page normally and simplevideo will replace them when it is invoked.</p>
+
+<pre><code>&lt;div id="mySimpleVideo"&gt;&lt;/div&gt;
+&lt;script&gt;
+    simplevideo.init({
+        target: '#mySimpleVideo',
+        src: 'myVideoFilePath.mp4'
+    });
+&lt;/script&gt;
+</code></pre>
+
+<p>Similarly, you can use an existing video element and simplevideo will handle the existing attributes to play the video.</p>
+
+<pre><code>&lt;video class="my-video-class" loop autoplay&gt;
+    &lt;source src="myVideoFilePath.mp4" type="video/mp4" /&gt;
+&lt;/video&gt;
+&lt;script&gt;
+    var myVideoAsAJQueryObject = $('.my-video-class');
+    simplevideo.init({
+        target: myVideoAsAJQueryObject
+    });
+&lt;/script&gt;
+</code></pre>
+
+<p>When you initialize a simplevideo object, it returns an object that allows you to interact with the video.</p>
+
+<pre><code>&lt;video class="my-video-class" loop autoplay&gt;
+    &lt;source src="myVideoFilePath.mp4" type="video/mp4" /&gt;
+&lt;/video&gt;
+&lt;script&gt;
+    var myVideo = simplevideo.init({
+        target: '.my-video-class'
+    });
+
+    myVideo.pause();
+    myVideo.setVolume('30%');
+&lt;/script&gt;
+</code></pre>
+
+<p>There are also hooks to listen to events that happen to the video.</p>
+
+<pre><code>&lt;video class="my-video-class" loop autoplay&gt;
+    &lt;source src="myVideoFilePath.mp4" type="video/mp4" /&gt;
+&lt;/video&gt;
+&lt;script&gt;
+    var myVideo = simplevideo.init({
+            target: '.my-video-class',
+            onPause: function() {
+                alert('playing!');
+            },
+            onPlay: function() {
+                alert('paused...');
+            },
+            onPlaying: function(currentTime, videoDuration) {
+                console.log('current time: ' + currentTime + ', video duration: ' + videoDuration);
+            },
+            onEnded: function() {
+                alert('video complete');
+            }
+        });
+&lt;/script&gt;
+</code></pre>
+
+<p>In total, the properties of a simplevideo instance is:</p>
+
+<ul>
+<li>
+<code>target</code> - <strong>required</strong>, the jQuery object or string for jQuery to find your object (note: this must identify a single object, not an array of objects)</li>
+<li>
+<code>src</code> - <em>default: none</em>, the video element url (will use a source specified in the HTML if omitted, otherwise simplevideo will use this value)</li>
+<li>
+<code>autoplay</code> - <em>default: false</em>, if the video should start playing once it's loaded (will use the value specified in the HTML if omitted, otherwise simplevideo will use this value)</li>
+<li>
+<code>poster</code> - <em>default: none</em>, what image the video should show before it's started playing (note: no poster is available if the browser falls back to Flash) (will use the value specified in the HTML if omitted, otherwise simplevideo will use this value)</li>
+<li>
+<code>controls</code> - <em>default: false</em>, if the browser's default controls should be displayed (note: no controls are available if the browser falls back to Flash) (will use the value specified in the HTML if omitted, otherwise simplevideo will use this value)</li>
+<li>
+<code>loop</code> - <em>default: false</em>, if the video should restart playing once it's finished (will use the value specified in the HTML if omitted, otherwise simplevideo will use this value)</li>
+<li>
+<code>onPlay</code> - <em>default: none</em>, a function executed when the video starts playing</li>
+<li>
+<code>onPause</code> - <em>default: none</em>, a function executed when the video is paused</li>
+<li>
+<code>onEnded</code> - <em>default: reset current time to 0</em>, a function executed when the video ends</li>
+<li>
+<code>onPlaying</code> - <em>default: none</em>, a function executed while the video is playing</li>
+<li>
+<code>onPlayingInterval</code> - <em>default: 30</em>, how many milliseconds between each execution of <code>onPlaying</code>
+</li>
+<li>
+<code>swfobjecturl</code> - <em>default: 'swfobject.js'</em>, where the swfobject library should be loaded from (only loaded when necessary)</li>
+<li>
+<code>swfUrl</code> - <em>default: 'simplevideo.swf'</em>, where the simplevideo Flash fallback should be loaded from</li>
+<li>
+<code>playerProductInstallSwfUrl</code> - <em>default: 'playerProductInstall.swf'</em>, where the update Flash swf should be loaded from</li>
+</ul>
+
+<p>In addition, there are a few methods and properties returned in the simplevideo object:</p>
+
+<ul>
+<li>
+<code>getCurrentTime()</code> - returns the current time of the video in seconds</li>
+<li>
+<code>setCurrentTime(secondsOrPercentage)</code> - sets the current time of the video in seconds or a percent in the form of a string <code>'50%'</code> to go halfway through a video</li>
+<li>
+<code>getDuration()</code> - returns the duration of the video in seconds</li>
+<li>
+<code>getVolume()</code> - returns the volume of the video element</li>
+<li>
+<code>setVolume(zeroToOneOrPercentage)</code> - sets the volume of the video element from 0 to 1 or a percent in the form of a string <code>'50%'</code> to put the volume halfway up</li>
+<li>
+<code>play()</code> - play the video from it's current location (triggers the <code>onPlay</code> callback)</li>
+<li>
+<code>pause()</code> - pause the video (triggers the <code>onPause</code> callback)</li>
+<li>
+<code>fullscreen(trueToEnterFullscreenAndFalseToExit)</code> - places the video in fullscreen mode (note: to enter fullscreen in webkit broswers, this needs to be triggered as part of a click or keyboard action)</li>
+<li>
+<code>paused</code> - whether or not the video is currently paused</li>
+<li>
+<code>target</code> - the jQuery element of the video itself or the container of the swf</li>
+<li>
+<code>swf</code> - the swf element created (if Flash is required)</li>
+<li>
+<code>swfId</code> - a randomly generated uuid to differentiate the swf element (if Flash is required)</li>
+</ul>
+
+<h1>
+<a id="creator" class="anchor" href="#creator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creator</h1>
+
+<p>Brian Manning</p>
+
+<ul>
+<li><a href="http://github.com/brimanning">http://github.com/brimanning</a></li>
+<li><a href="http://brimanning.com">http://brimanning.com</a></li>
+<li><a href="http://twitter.com/brimanning">http://twitter.com/brimanning</a></li>
+</ul>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>Code and documentation copyright 2014 Brian Manning. Code released under the <a href="https://github.com/brimanning/simplevideo/blob/master/LICENSE.md">MIT license</a>.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/brimanning/simplevideo">simplevideo</a> is maintained by <a href="https://github.com/brimanning">brimanning</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
