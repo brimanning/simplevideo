@@ -1,4 +1,4 @@
-About simplevideo
+About [simplevideo](http://brimanning.github.io/simplevideo/)
 ===
 
 __Note: This library is still very much in an alpha state. Older versions of browsers, mobile support, nor many versions of Flash have been tested yet. simplevideo works without issue in the latest versions of Firefox, Chrome, and Safari on Mac OSX 10.9. More testing will happen in the near future.__
@@ -58,11 +58,11 @@ When you initialize a simplevideo object, it returns an object that allows you t
 		var myVideo = simplevideo.init({
 			target: '.my-video-class'
 		});
-			
+
 		myVideo.pause();
 		myVideo.setVolume('30%');
 	</script>
-	
+
 There are also hooks to listen to events that happen to the video.
 
 	<video class="my-video-class" loop autoplay>
@@ -85,7 +85,7 @@ There are also hooks to listen to events that happen to the video.
 				}
 			});
 	</script>
-	
+
 In total, the properties of a simplevideo instance is:
 
 + `target` - __required__, the jQuery object or string for jQuery to find your object (note: this must identify a single object, not an array of objects)
